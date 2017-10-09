@@ -31,14 +31,23 @@ ark_coins = 73.60398864
 neo_coins = 17
 eth_coins = 0.11470651
 
-ans = float(ark_price)*ark_coins + float(neo_price)*neo_coins + float(omg_price)*omg_coins + float(eth_price)*eth_coins
+ark_worth = float(ark_price)*ark_coins
+neo_worth = float(neo_price)*neo_coins
+omg_worth = float(omg_price)*omg_coins
+eth_worth = float(eth_price)*eth_coins
+
+ans = ark_worth + neo_worth + omg_worth + eth_worth
 
 D = decimal.Decimal
 cent = D('0.01')
 
 ans = D(ans)
+
 ans = ans.quantize(cent,rounding=decimal.ROUND_UP)
 ans = int(ans)
+
+print("Coin Prices: \nARK: $" + ark_price + " USD\nNEO: $"+ neo_price + " USD\nOMG: $" + omg_price +" USD\nETH: $" + eth_price +" USD\n")
+print("Coin Worth:  \nARK: $" + str(D(ark_worth).quantize(cent,rounding=decimal.ROUND_UP)) + " USD\nNEO: $"+ str(D(neo_worth).quantize(cent,rounding=decimal.ROUND_UP)) + " USD\nOMG: $" + str(D(omg_worth).quantize(cent,rounding=decimal.ROUND_UP))  + "USD\nETH: $" + str(D(eth_worth).quantize(cent,rounding=decimal.ROUND_UP)) +" USD\n")
 
 #Convert USD to AUD
 
