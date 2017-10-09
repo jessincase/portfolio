@@ -8,9 +8,6 @@ from bs4 import BeautifulSoup
 import requests
 import decimal
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
 #Gets Ark, Neo, then Omisego Coin price
 ark_page = requests.get("https://coinmarketcap.com/currencies/ark/")
 neo_page = requests.get("https://coinmarketcap.com/currencies/neo/")
@@ -45,15 +42,12 @@ ans = int(ans)
 
 #Convert USD to AUD
 
-driver = webdriver.Firefox(executable_path = '/usr/local/bin/geckodriver')
 url = "http://www.xe.com/currencyconverter/convert/?Amount=" + str(ans) + "&From=USD&To=AUD"
-driver.get(url)
-elem = driver.find_element_by_id("amount")
-elem.clear()
-elem.send_keys(ans)
-elem.send_keys(Keys.RETURN)
+currency_page = requests.get(url)
+cp_soup = BeautifulSoup(currency_page.content, "html.parser")
+aud = cp_soup.find("span", {"class": "uccResultAmount"}).get_text()
 
-aud = driver.find_element_by_class_name("uccResultAmount").text
+
 print("Your total Cryptocurrency worth is $" + str(aud) + " AUD")
 
-driver.quit()
+
