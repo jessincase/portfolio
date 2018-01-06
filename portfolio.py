@@ -62,9 +62,9 @@ print("Your total Cryptocurrency worth is $" + str(aud) + " AUD")
 
 #Prints the percentage you are up or down by
 aud = aud.replace(',', '')
-percentage = (Decimal(aud)-1500)/1700*100
+percentage = (Decimal(aud)-500)/500*100
 
-if Decimal(aud) >= 1700:
+if Decimal(aud) >= 500:
     print("+" + str(D(percentage).quantize(cent,rounding=decimal.ROUND_UP)) + '%')
 else:
     print(str(D(percentage).quantize(cent,rounding=decimal.ROUND_UP)) + '%')
