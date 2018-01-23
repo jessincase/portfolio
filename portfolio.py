@@ -13,31 +13,37 @@ ark_page = requests.get("https://coinmarketcap.com/currencies/ark/")
 neo_page = requests.get("https://coinmarketcap.com/currencies/neo/")
 omg_page = requests.get("https://coinmarketcap.com/currencies/omisego/")
 eth_page = requests.get("https://coinmarketcap.com/currencies/ethereum/")
+icx_page = requests.get("https://coinmarketcap.com/currencies/icon/")
 
 #Scrapes and parses each coin price
 ark_soup = BeautifulSoup(ark_page.content, "html.parser")
 neo_soup = BeautifulSoup(neo_page.content, "html.parser")
 omg_soup = BeautifulSoup(omg_page.content, "html.parser")
 eth_soup = BeautifulSoup(eth_page.content, "html.parser")
+icx_soup = BeautifulSoup(icx_page.content, "html.parser")
+
 ark_price = ark_soup.find("span", {"id": "quote_price"}).get_text().split('\n', 2)[1].lstrip('$')
 neo_price = neo_soup.find("span", {"id": "quote_price"}).get_text().split('\n', 2)[1].lstrip('$')
 omg_price = omg_soup.find("span", {"id": "quote_price"}).get_text().split('\n', 2)[1].lstrip('$')
 eth_price = eth_soup.find("span", {"id": "quote_price"}).get_text().split('\n', 2)[1].lstrip('$')
+icx_price = icx_soup.find("span", {"id": "quote_price"}).get_text().split('\n', 2)[1].lstrip('$')
 
-#Insert quantity of each coin. Currently has arbitrary numbers. 
-omg_coins = 0.5
-ark_coins = 0.5
-neo_coins = 0.5
-eth_coins = 0.5
+#Insert quantity of each coin. 
+omg_coins = 49.97
+ark_coins = 73.60398864
+neo_coins = 17
+eth_coins = 0.3232453 + 0.70357053
+icx_coins = 26.9
 
 #Calculates worth of each coin
 ark_worth = float(ark_price)*ark_coins
 neo_worth = float(neo_price)*neo_coins
 omg_worth = float(omg_price)*omg_coins
 eth_worth = float(eth_price)*eth_coins
+icx_worth = float(icx_price)*icx_coins
 
 #Calculates total worth
-ans = ark_worth + neo_worth + omg_worth + eth_worth
+ans = ark_worth + neo_worth + omg_worth + eth_worth + icx_worth
 
 #Rounds up worth
 D = decimal.Decimal
@@ -47,8 +53,8 @@ ans = ans.quantize(cent,rounding=decimal.ROUND_UP)
 ans = int(ans)
 
 #Display each coin price and then worth
-print("Coin Prices: \nARK: $" + ark_price + " USD\nNEO: $"+ neo_price + " USD\nOMG: $" + omg_price +" USD\nETH: $" + eth_price +" USD\n")
-print("Coin Worth:  \nARK: $" + str(D(ark_worth).quantize(cent,rounding=decimal.ROUND_UP)) + " USD\nNEO: $"+ str(D(neo_worth).quantize(cent,rounding=decimal.ROUND_UP)) + " USD\nOMG: $" + str(D(omg_worth).quantize(cent,rounding=decimal.ROUND_UP))  + " USD\nETH: $" + str(D(eth_worth).quantize(cent,rounding=decimal.ROUND_UP)) +" USD\n")
+print("Coin Prices: \nARK: $" + ark_price + " USD\nNEO: $"+ neo_price + " USD\nOMG: $" + omg_price +" USD\nETH: $" + eth_price +" USD\nICX: $" + icx_price + " USD\n" )
+print("Coin Worth:  \nARK: $" + str(D(ark_worth).quantize(cent,rounding=decimal.ROUND_UP)) + " USD\nNEO: $"+ str(D(neo_worth).quantize(cent,rounding=decimal.ROUND_UP)) + " USD\nOMG: $" + str(D(omg_worth).quantize(cent,rounding=decimal.ROUND_UP))  + " USD\nETH: $" + str(D(eth_worth).quantize(cent,rounding=decimal.ROUND_UP)) +" USD\nICX: $" + str(D(icx_worth).quantize(cent,rounding=decimal.ROUND_UP)) + " USD\n")
 
 #Converts USD to AUD
 url = "http://www.xe.com/currencyconverter/convert/?Amount=" + str(ans) + "&From=USD&To=AUD"
@@ -61,7 +67,9 @@ print("Time: " + str(datetime.datetime.now()))
 print("Your total Cryptocurrency worth is $" + str(aud) + " AUD")
 
 #Prints the percentage you are up or down by
-original_investment = 500
+original_investment = 3200
+
+
 aud = aud.replace(',', '')
 percentage = (Decimal(aud)-original_investment)/original_investment*100
 
