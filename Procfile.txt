@@ -1,1 +1,2 @@
 web: python portfolio.py
+web: python server.py
