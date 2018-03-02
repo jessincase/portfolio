@@ -29,11 +29,11 @@ eth_price = eth_soup.find("span", {"id": "quote_price"}).get_text().split('\n', 
 icx_price = icx_soup.find("span", {"id": "quote_price"}).get_text().split('\n', 2)[1].lstrip('$')
 
 #Insert quantity of each coin. 
-omg_coins = 49.97
-ark_coins = 73.60398864
-neo_coins = 17
-eth_coins = 0.3232453 + 0.70357053
-icx_coins = 26.9
+omg_coins = 10
+ark_coins = 10
+neo_coins = 10
+eth_coins = 10
+icx_coins = 10
 
 #Calculates worth of each coin
 ark_worth = float(ark_price)*ark_coins
@@ -67,7 +67,7 @@ print("Time: " + str(datetime.datetime.now()))
 print("Your total Cryptocurrency worth is $" + str(aud) + " AUD")
 
 #Prints the percentage you are up or down by
-original_investment = 3200
+original_investment = 1000
 
 
 aud = aud.replace(',', '')
